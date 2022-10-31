@@ -1,0 +1,48 @@
+.flow {
+  width: 100%;
+  height: 100%;
+}
+
+.content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+
+#stencil {
+  width: 16%;
+  height: 100%;
+  position: relative;
+  border-right: 1px solid rgba(0, 0, 0, 0.08);
+  box-sizing: border-box;
+}
+
+.panel {
+  width: 69%;
+  height: 100%;
+}
+
+.panel .toolbar {
+  width: 100%;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  background-color: #f7f9fb;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.panel #container {
+  width: 100%;
+  height: calc(100% - 38px);
+}
+
+.config {
+  width: 15%;
+  height: 100%;
+  padding: 0 10px;
+  border-left: 1px solid rgba(0, 0, 0, 0.08);
+  box-sizing: border-box;
+}
+
+
+
