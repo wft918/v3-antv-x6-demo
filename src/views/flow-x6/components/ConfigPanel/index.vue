@@ -1,8 +1,8 @@
 <template>
   <div class="config" style="width: 100%; height: 100%;">
-    <ConfigGrid :id="id" v-show="type === 'grid'" />
-    <ConfigNode :id="id" v-show="type === 'node'" />
-    <ConfigEdge :id="id" v-show="type === 'edge'" />
+    <ConfigGrid v-show="type === 'grid'" />
+    <ConfigNode v-show="type === 'node'" :id="id" />
+    <ConfigEdge v-show="type === 'edge'" :id="id" />
   </div>
 </template>
 

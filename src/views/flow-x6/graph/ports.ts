@@ -1,64 +1,32 @@
+const circle = {
+  r: 4,
+  magnet: true,
+  stroke: '#5F95FF',
+  strokeWidth: 1,
+  fill: '#fff',
+  style: {
+    visibility: 'hidden',
+  },
+}
+
+
 export const basicPorts = {
   groups: {
     top: {
       position: 'top',
-      attrs: {
-        circle: {
-          r: 4,
-          magnet: true,
-          stroke: '#5F95FF',
-          strokeWidth: 1,
-          fill: '#fff',
-          style: {
-            visibility: 'hidden',
-          },
-        },
-      },
+      attrs: { circle },
     },
     right: {
       position: 'right',
-      attrs: {
-        circle: {
-          r: 4,
-          magnet: true,
-          stroke: '#5F95FF',
-          strokeWidth: 1,
-          fill: '#fff',
-          style: {
-            visibility: 'hidden',
-          },
-        },
-      },
+      attrs: { circle },
     },
     bottom: {
       position: 'bottom',
-      attrs: {
-        circle: {
-          r: 4,
-          magnet: true,
-          stroke: '#5F95FF',
-          strokeWidth: 1,
-          fill: '#fff',
-          style: {
-            visibility: 'hidden',
-          },
-        },
-      },
+      attrs: { circle },
     },
     left: {
       position: 'left',
-      attrs: {
-        circle: {
-          r: 4,
-          magnet: true,
-          stroke: '#5F95FF',
-          strokeWidth: 1,
-          fill: '#fff',
-          style: {
-            visibility: 'hidden',
-          },
-        },
-      },
+      attrs: { circle },
     },
   },
   items: [
@@ -109,18 +77,7 @@ export const customPorts = {
         x: '50%',
         y: '0%',
       },
-      attrs: {
-        circle: {
-          r: 4,
-          magnet: true,
-          stroke: '#5F95FF',
-          strokeWidth: 1,
-          fill: '#fff',
-          style: {
-            visibility: 'hidden',
-          },
-        },
-      },
+      attrs: { circle },
     },
     {
       id: 'port2',
@@ -129,18 +86,7 @@ export const customPorts = {
         x: '100%',
         y: '50%',
       },
-      attrs: {
-        circle: {
-          r: 4,
-          magnet: true,
-          stroke: '#5F95FF',
-          strokeWidth: 1,
-          fill: '#fff',
-          style: {
-            visibility: 'hidden',
-          }
-        },
-      }
+      attrs: { circle }
     },
     {
       id: 'port3',
@@ -149,18 +95,7 @@ export const customPorts = {
         x: '50%',
         y: '100%',
       },
-      attrs: {
-        circle: {
-          r: 4,
-          magnet: true,
-          stroke: '#5F95FF',
-          strokeWidth: 1,
-          fill: '#fff',
-          style: {
-            visibility: 'hidden',
-          }
-        }
-      }
+      attrs: { circle }
     },
     {
       id: 'port4',
@@ -169,18 +104,7 @@ export const customPorts = {
         x: '0%',
         y: '50%',
       },
-      attrs: {
-        circle: {
-          r: 4,
-          magnet: true,
-          stroke: '#5F95FF',
-          strokeWidth: 1,
-          fill: '#fff',
-          style: {
-            visibility: 'hidden',
-          }
-        }
-      }
+      attrs: { circle }
     }
   ]
 }
