@@ -37,7 +37,7 @@ const getFlowJson = () => {
   // 使用setTimeout模拟一下
   setTimeout(() => {
     const graphJson = JSON.parse(window.localStorage.getItem('graphJson') || '{}')
-    if(graphJson && JSON.stringify(graphJson !== '{}')) {
+    if(graphJson && JSON.stringify(graphJson) !== '{}') {
       initFlowImage(graphJson)
     } else {
       router.push('/flow-x6')
