@@ -3,12 +3,13 @@
     <div class="content">
       <!--左侧工具栏-->
       <div id="stencil" />
+      <!-- 流程图 -->
       <div class="panel">
-        <!--流程图工具栏-->
+        <!--工具栏-->
         <div class="toolbar">
           <ToolBar v-if="isReady" />
         </div>
-        <!--流程图画板-->
+        <!--画板-->
         <div id="container" />
       </div>
       <!--右侧工具栏-->
