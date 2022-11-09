@@ -62,144 +62,137 @@
 
   </div>
 </template>
-<script>
+<script setup lang="ts">
 import FlowGraph from '../../graph'
 import { DataUri } from '@antv/x6'
-export default {
-  data() {
-    return {
-      canUndo: null,
-      canRedo: null
-    }
-  },
-  created() {
-    this.myInit()
-  },
-  methods: {
-    myInit() {
-      const { graph } = FlowGraph
-      const { history } = graph
-      this.canUndo = history.canUndo()
-      this.canRedo = history.canRedo()
-      history.on('change', () => {
-      this.canUndo = history.canUndo()
-      this.canRedo = history.canRedo()
-    })
-    graph.bindKey('ctrl+z', () => {
-      if (history.canUndo()) {
-        history.undo()
-      }
-      return false
-    })
-    graph.bindKey('ctrl+shift+z', () => {
-      if (history.canRedo()) {
-        history.redo()
-      }
-      return false
-    })
-    graph.bindKey('ctrl+d', () => {
-      graph.clearCells()
-      return false
-    })
-    graph.bindKey('ctrl+s', () => {
-      graph.toPNG((datauri) => {
-        DataUri.downloadDataUri(datauri, 'chart.png')
-      })
-      return false
-    })
-    graph.bindKey('ctrl+p', () => {
-      graph.printPreview()
-      return false
-    })
-    graph.bindKey('ctrl+c', this.copy)
-    graph.bindKey('ctrl+v', this.paste)
-    graph.bindKey('ctrl+x', this.cut)
-    },
-    copy() {
-      const { graph } = FlowGraph
-      const cells = graph.getSelectedCells()
-      if (cells.length) {
-        graph.copy(cells)
-      }
-      return false
-    },
+import { ref } from 'vue'
 
-    cut () {
-      const { graph } = FlowGraph
-      const cells = graph.getSelectedCells()
-      if (cells.length) {
-        graph.cut(cells)
-      }
-      return false
-    },
+const { graph } = FlowGraph;
+const { history } = graph;
 
-    paste () {
-      const { graph } = FlowGraph
-      if (!graph.isClipboardEmpty()) {
-        const cells = graph.paste({ offset: 32 })
-        graph.cleanSelection()
-        graph.select(cells)
-      }
-      return false
-    },
+const canUndo = ref(history.canUndo());
+const canRedo = ref(history.canRedo());
 
-    handleClick(event) {
-      const { graph } = FlowGraph
-      const name = (event.currentTarget).name
-      switch (name) {
-        case 'undo':
-          graph.history.undo()
-          break
-        case 'redo':
-          graph.history.redo()
-          break
-        case 'delete':
-          graph.clearCells()
-          break
-        case 'savePNG':
-          graph.toPNG((dataUri) => {
-            // 下载
-            DataUri.downloadDataUri(dataUri, 'chartx.png')
-          }, {
-            backgroundColor:'white',
-            padding: {
-              top: 20,
-              right: 30,
-              bottom: 40,
-              left: 50,
-            },
-            quality:1
-          })
-          break
-        case 'saveSVG':
-          graph.toSVG((dataUri) => {
-            // 下载
-            DataUri.downloadDataUri(DataUri.svgToDataUrl(dataUri), 'chart.svg')
-          })
-          break
-        case 'print':
-          graph.printPreview()
-          break
-        case 'copy':
-          this.copy()
-          break
-        case 'cut':
-          this.cut()
-          break
-        case 'paste':
-          this.paste()
-          break
-        case 'toJSON':
-          console.log(graph.toJSON())
-          window.localStorage.setItem('graphJson', JSON.stringify(graph.toJSON()))
-          // graph.fromJSON({cells:[graph.toJSON().cells[0],graph.toJSON().cells[1]]})
-          break
-        default:
-          break
-      }
-    }
+history.on('change', () => {
+  canUndo.value = history.canUndo();
+  canRedo.value = history.canRedo();
+});
+graph.bindKey('ctrl+z', () => {
+  if (history.canUndo()) {
+    history.undo();
   }
-}
+  return false;
+});
+graph.bindKey('ctrl+shift+z', () => {
+  if (history.canRedo()) {
+    history.redo();
+  }
+  return false;
+});
+graph.bindKey('ctrl+d', () => {
+  graph.clearCells();
+  return false;
+});
+graph.bindKey('ctrl+s', () => {
+  graph.toPNG((datauri: string) => {
+    DataUri.downloadDataUri(datauri, 'chart.png');
+  });
+  return false;
+});
+graph.bindKey('ctrl+p', () => {
+  graph.printPreview();
+  return false;
+});
+graph.bindKey('ctrl+c', copy);
+graph.bindKey('ctrl+v', paste);
+graph.bindKey('ctrl+x', cut);
+
+function copy() {
+  const { graph } = FlowGraph;
+  const cells = graph.getSelectedCells();
+  if (cells.length) {
+    graph.copy(cells);
+  }
+  return false;
+};
+
+function cut() {
+  const { graph } = FlowGraph;
+  const cells = graph.getSelectedCells();
+  if (cells.length) {
+    graph.cut(cells);
+  }
+  return false;
+};
+
+function paste() {
+  const { graph } = FlowGraph;
+  if (!graph.isClipboardEmpty()) {
+    const cells = graph.paste({ offset: 32 });
+    graph.cleanSelection();
+    graph.select(cells);
+  }
+  return false;
+};
+
+function handleClick(event: Event) {
+  const { graph } = FlowGraph;
+  const name = (event.currentTarget as any).name!;
+  switch (name) {
+    case 'undo':
+      graph.history.undo();
+      break;
+    case 'redo':
+      graph.history.redo();
+      break;
+    case 'delete':
+      graph.clearCells();
+      break;
+    case 'savePNG':
+      graph.toPNG(
+        (dataUri: string) => {
+          // 下载
+          DataUri.downloadDataUri(dataUri, 'chartx.png');
+        },
+        {
+          backgroundColor: 'white',
+          padding: {
+            top: 20,
+            right: 30,
+            bottom: 40,
+            left: 50,
+          },
+          quality: 1,
+        },
+      );
+      break;
+    case 'saveSVG':
+      graph.toSVG((dataUri: string) => {
+        // 下载
+        DataUri.downloadDataUri(DataUri.svgToDataUrl(dataUri), 'chart.svg');
+      });
+      break;
+    case 'print':
+      graph.printPreview();
+      break;
+    case 'copy':
+      copy();
+      break;
+    case 'cut':
+      cut();
+      break;
+    case 'paste':
+      paste();
+      break;
+    case 'toJSON':
+      console.log(graph.toJSON())
+      window.localStorage.setItem('graphJson', JSON.stringify(graph.toJSON()))
+      // graph.fromJSON({cells:[graph.toJSON().cells[0],graph.toJSON().cells[1]]})
+      break;
+    default:
+      break;
+  }
+};
 </script>
 <style scoped>
 .bar{
